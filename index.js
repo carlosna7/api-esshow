@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const app = express()
-const port = 5000
+const port = 5050
 
 const jwtKey = 'secret-security-key'
 
