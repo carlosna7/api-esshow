@@ -106,7 +106,7 @@ app.post('/user/login', async (req, res) => {
         }
 
         // passa o userID do mongoDB como token
-        const token = jwt.sign({ userId: user._id }, jwtKey, { expiresIn: "30m" })
+        const token = jwt.sign({ userId: user._id }, jwtKey, { expiresIn: "1h" })
 
         res.json(token)
 
