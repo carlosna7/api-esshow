@@ -129,8 +129,8 @@ app.patch('/user/shows/:_id', async (req, res) => {
 
         const updatedUser = await user.save()
 
-        const showsData = await Users.findById(req.params._id).select('-password -email')
-        res.json(showsData)
+        // const showsData = await Users.findById(req.params._id).select('-password -email')
+        res.json({ msg: 'Orçamento enviado com sucesso!'})
         
     } catch (error) {
         console.error(error)
@@ -154,7 +154,7 @@ app.delete('/user/shows/:userId/:showId', async (req, res) => {
         user.shows.pull(showId)
         await user.save()
         
-        res.json(show)
+        res.json({ msg: 'Contratação cancelada!'})
 
     } catch (error) {
         console.error(error)
