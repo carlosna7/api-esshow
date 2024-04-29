@@ -71,7 +71,7 @@ app.post('/user/register', async (req, res) => {
         }
 
         const saltRounds = 10
-        const hashPassword = await bcrypt.hash(password, saltRounds);
+        const hashPassword = await bcrypt.hash(password, saltRounds)
         
         const user = new Users({ 
             name, 
@@ -81,7 +81,7 @@ app.post('/user/register', async (req, res) => {
         })
 
         await user.save()
-        res.json(user)
+        res.json({ msg: 'Usuário cadastrado com sucesso!'})
 
     } catch (error) {
         console.error(error)
@@ -96,13 +96,13 @@ app.post('/user/login', async (req, res) => {
         const user  = await Users.findOne({ email })
 
         if (!user) {
-            return res.status(401).json({ error: 'Email ou senha incorretos' });
+            return res.status(401).json({ error: 'Email ou senha incorretos' })
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password)
 
         if (!isPasswordValid) {
-            return res.status(401).json({ error: 'Email ou senha incorretos' });
+            return res.status(401).json({ error: 'Email ou senha incorretos' })
         }
 
         // passa o userID do mongoDB como token
@@ -122,7 +122,7 @@ app.patch('/user/shows/:_id', async (req, res) => {
         const user = await Users.findById(req.params._id)
 
         if (!user) {
-            return res.status(401).json({ error: 'Email ou senha incorretos' });
+            return res.status(401).json({ error: 'Usuário não encontrado' })
         }
 
         user.shows.push(shows)
@@ -143,12 +143,12 @@ app.delete('/user/shows/:userId/:showId', async (req, res) => {
         const { userId, showId } = req.params
         const user = await Users.findById(userId)
         if(!user) {
-            return res.status(404).send('Usuário não encontrado')
+            return res.status(404).send({ error: 'Usuário não encontrado'})
         }
 
         const show = user.shows.id(showId)
         if (!show) {
-            return res.status(404).send('Show não encontrado')
+            return res.status(404).send({ error: 'Show não encontrado'})
         }
 
         user.shows.pull(showId)
